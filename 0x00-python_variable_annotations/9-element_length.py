@@ -2,7 +2,7 @@
 """
 Exploring duck typing
 """
-from typing import Tuple, Iterable, Sequence, List|
+from typing import Tuple, Iterable, Sequence, List
 
 
 def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
