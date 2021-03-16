@@ -2,13 +2,13 @@
 """
 Exploring TypeVar
 """
-from typing import TypeVar, Union, Mapping, Any
+from typing import Union, Mapping, Any, TypeVar
 
 T = TypeVar('T')
 
 
 def safely_get_value(dct: Mapping, key: Any,
-                     default: Union[T, None]=None) -> Union[Any, T]:
+                     default: Union[T, None] = None) -> Union[Any, T]:
     """
     Checking type
     """
