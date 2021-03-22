@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+"""
+Implementing the FIFO cache police
+"""
+BaseCaching = __import__('base_caching').BaseCaching
+
+
+class FIFOCache(BaseCaching):
+    """
+    Class for implementing the FIFO caching system
+    """
+
+    def __init__(self):
+        """
+        ¿Constructor? method
+        """
+        super().__init__()
+        FIFOCache.all_keys = []
+
+    def put(self, key, item):
+        """
+        Method to add new values using the FIFO queue
+        """
+        if key in self.cache_data and item is not None:
+            self.cache_data[key] = item
+        elif key is not None and item is not None:
+            if len(FIFOCache.all_keys) >= BaseCaching.MAX_ITEMS:
+                removing = FIFOCache.all_keys.pop(0)
+                del self.cache_data[removing]
+                print("DISCARD:{}".format(removing))
+            FIFOCache.all_keys.append(key)
+            self.cache_data[key] = item
+
+    def get(self, key):
+        """
+        The getter for any key in the dictionary
+        """
+        if key is None or self.cache_data.get(key) is None:
+            return None
+        return self.cache_data[key]
