@@ -28,3 +28,11 @@ class LIFOCache(BaseCaching):
                 removing = LIFOCache.all_keys.pop(last)
                 del self.cache_data[removing]
                 print("DISCARD: {}".format(removing))
+
+    def get(self, key):
+        """
+        Getter of LIFO cache system
+        """
+        if key is None or self.cache_data.get(key) is None:
+            return None
+        return self.cache_data[key]
