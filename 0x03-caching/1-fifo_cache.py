@@ -21,15 +21,16 @@ class FIFOCache(BaseCaching):
         """
         Method to add new values using the FIFO queue
         """
-        if key in self.cache_data and item is not None:
-            self.cache_data[key] = item
-        elif key is not None and item is not None:
-            if len(FIFOCache.all_keys) >= BaseCaching.MAX_ITEMS:
-                removing = FIFOCache.all_keys.pop(0)
-                del self.cache_data[removing]
-                print("DISCARD:{}".format(removing))
-            FIFOCache.all_keys.append(key)
-            self.cache_data[key] = item
+        if key is not None and item is not None:
+            if key in self.cache_data:
+                self.cache_data[key] = item
+            else:
+                if len(FIFOCache.all_keys) >= BaseCaching.MAX_ITEMS:
+                    removing = FIFOCache.all_keys.pop(0)
+                    del self.cache_data[removing]
+                    print("DISCARD:{}".format(removing))
+                FIFOCache.all_keys.append(key)
+                self.cache_data[key] = item
 
     def get(self, key):
         """
