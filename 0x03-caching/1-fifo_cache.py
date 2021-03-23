@@ -15,7 +15,7 @@ class FIFOCache(BaseCaching):
         ¿Constructor? method
         """
         super().__init__()
-        FIFOCache.all_keys = []
+        self.all_keys = []
 
     def put(self, key, item):
         """
@@ -25,10 +25,10 @@ class FIFOCache(BaseCaching):
             if key in self.cache_data:
                 self.cache_data[key] = item
             else:
-                FIFOCache.all_keys.append(key)
+                self.all_keys.append(key)
                 self.cache_data[key] = item
                 if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                    removing = FIFOCache.all_keys.pop(0)
+                    removing = self.all_keys.pop(0)
                     del self.cache_data[removing]
                     print("DISCARD: {}".format(removing))
 
