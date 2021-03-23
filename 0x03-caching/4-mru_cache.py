@@ -30,9 +30,10 @@ class MRUCache(BaseCaching):
                 self.recent_keys.append(key)
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             recent = self.recent_keys[-2]
+            print("Discard: {}".format(recent))
             del self.cache_data[recent]
             self.recent_keys.remove(recent)
-            print("Discard: {}".format(recent))
+            
 
     def get(self, key):
         """
