@@ -32,7 +32,7 @@ class MRUCache(BaseCaching):
             recent = self.recent_keys[-2]
             print("Discard: {}".format(recent))
             del self.cache_data[recent]
-            self.recent_keys.remove(recent)
+            self.recent_keys.pop(-2)
             
 
     def get(self, key):
