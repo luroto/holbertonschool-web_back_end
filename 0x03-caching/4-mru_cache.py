@@ -40,7 +40,8 @@ class MRUCache(BaseCaching):
         """
         if key is None or key not in self.cache_data:
             return None
-        if key != self.recent_keys:
-            self.recent_keys.remove(key)
-            self.recent_keys.append(key)
+        if key in self.recent_keys:
+            if key != self.recent_keys[-1]:
+                self.recent_keys.remove(key)
+                self.recent_keys.append(key)
         return self.cache_data[key]
