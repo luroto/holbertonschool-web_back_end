@@ -21,19 +21,19 @@ class MRUCache(BaseCaching):
         """
             Method for adding key and value to the dict
         """
-        self.cache_data[key] = item
-        if key not in self.recent_keys:
-            self.recent_keys.append(key)
-        else:
-            if key != self.recent_keys[-1]:
-                self.recent_keys.remove(key)
+        if key is not None and item is not None:
+            self.cache_data[key] = item
+            if key not in self.recent_keys:
                 self.recent_keys.append(key)
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            recent = self.recent_keys[-2]
-            self.recent_keys.pop(-2)
-            del self.cache_data[recent]
-            print("Discard: {}".format(recent))
-            
+            else:
+                if key != self.recent_keys[-1]:
+                    self.recent_keys.remove(key)
+                    self.recent_keys.append(key)
+            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
+                recent = self.recent_keys[-2]
+                self.recent_keys.pop(-2)
+                del self.cache_data[recent]
+                print("Discard: {}".format(recent))
 
     def get(self, key):
         """
