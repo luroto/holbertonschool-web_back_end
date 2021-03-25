@@ -36,8 +36,6 @@ class Server:
 
         looking = index_range(page, page_size)
         fulldata = self.dataset()
-        if looking[0] > len(fulldata):
-            return []
         return fulldata[looking[0]:looking[1]]
 
     def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
