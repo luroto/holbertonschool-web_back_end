@@ -54,7 +54,8 @@ class Server:
         nextico = 0
         nextico = page + 1 if page <= total_pages else None
         prev = page - 1 if page - 1 != 0 else None
-        return {'page_size': page_size, 'page': page,
+        tamapa = page_size if page <= total_pages else 0
+        return {'page_size': tamapa, 'page': page,
                 'data': self.get_page(page, page_size),
                 'next_page': nextico,
                 'prev_page': prev,
