@@ -32,14 +32,14 @@ class Server:
         assert page > 0
         assert page_size > 0
 
-        looking = Server.index_range(page, page_size)
+        looking = index_range(page, page_size)
         fulldata = self.dataset()
         if looking[0] > len(fulldata):
             return []
         return fulldata[looking[0]:looking[1]]
 
-    def index_range(page: int, page_size: int) -> tuple:
-        """
-        Calculates the indexes contained in a page given a page_size
-        """
-        return ((page - 1) * page_size, page * page_size)
+def index_range(page: int, page_size: int) -> tuple:
+    """
+    Calculates the indexes contained in a page given a page_size
+    """
+    return ((page - 1) * page_size, page * page_size)
