@@ -48,7 +48,7 @@ class Server:
         total_pages = math.ceil(len(fulldata) / page_size)
         prev = 0
         nextico = 0
-        nextico = page + 1 if page <= total_pages else None
+        nextico = page + 1 if page < total_pages else None
         prev = page - 1 if page - 1 != 0 else None
         tamapa = page_size if page <= total_pages else 0
         return {'page_size': tamapa, 'page': page,
