@@ -34,7 +34,7 @@ class Server:
 
         looking = Server.index_range(page, page_size)
         fulldata = self.dataset()
-        if looking[0] > len(fulldata) or looking[1] > len(fulldata):
+        if looking[0] > len(fulldata):
             return []
         return fulldata[looking[0]:looking[1]]
 
