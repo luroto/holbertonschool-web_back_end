@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import math
-from typing import List
+from typing import List, Dict
 
 
 class Server:
@@ -43,3 +43,19 @@ class Server:
         Calculates the indexes contained in a page given a page_size
         """
         return ((page - 1) * page_size, page * page_size)
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """
+        Creates a dictionary hypermedia style
+        """
+        fulldata = self.dataset()
+        total_pages = math.ceil(len(fulldata) / page_size)
+        prev = 0
+        nextico = 0
+        nextico = page + 1 if page <= total_pages else None
+        prev = page - 1 if page != 0 else None
+        return {'page_size': page_size, 'page': page,
+                'data': self.get_page(page, page_size),
+                'next_page': nextico,
+                'prev_page': prev,
+                'total_pages': total_pages}
