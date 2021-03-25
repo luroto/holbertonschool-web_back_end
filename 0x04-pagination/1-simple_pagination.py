@@ -38,6 +38,7 @@ class Server:
             return []
         return fulldata[looking[0]:looking[1]]
 
+
 def index_range(page: int, page_size: int) -> tuple:
     """
     Calculates the indexes contained in a page given a page_size
