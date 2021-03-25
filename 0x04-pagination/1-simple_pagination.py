@@ -3,6 +3,8 @@ import csv
 import math
 from typing import List
 
+index_range = __import__('0-simple_helper_function').index_range
+
 
 class Server:
     """Server class to paginate a database of popular baby names.
@@ -37,10 +39,3 @@ class Server:
         if looking[0] > len(fulldata):
             return []
         return fulldata[looking[0]:looking[1]]
-
-
-def index_range(page: int, page_size: int) -> tuple:
-    """
-    Calculates the indexes contained in a page given a page_size
-    """
-    return ((page - 1) * page_size, page * page_size)
