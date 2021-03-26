@@ -41,7 +41,7 @@ class Server:
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
-        Get hyper index
+        Get hyper index even if some rows are missing 
         """
         assert isinstance(index, int)
         assert isinstance(page_size, int)

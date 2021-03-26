@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Working with hypermedia pagination
+"""
 import csv
 import math
 from typing import List, Dict

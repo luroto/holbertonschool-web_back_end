@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Working with simple pagination
+"""
 import csv
 import math
 from typing import List
@@ -27,7 +30,7 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        Function for getting the page content
+        Function for getting the page content given page and page size
         """
         assert isinstance(page, int) is True
         assert isinstance(page_size, int) is True
