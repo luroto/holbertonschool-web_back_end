@@ -5,6 +5,8 @@ Filtered logger powered by regex
 import logging
 import re
 from typing import List
+import os
+import mysql.connector
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -52,3 +54,17 @@ def filter_datum(fields: List[str], redaction: str, message: str,
         message = re.sub(r"{}=.*?{}".format(field, separator), "{}={}{}"
                          .format(field, redaction, separator), message)
     return message
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Function to get some env variables for creating a MySQL connection
+    """
+    db_username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    db_pwd = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+    connecting = connection.MySQLConnection(user=db_username,
+                                            password=db_pwd,
+                                            host=db_host,
+                                            database=db_name)
