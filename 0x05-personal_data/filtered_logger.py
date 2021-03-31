@@ -44,6 +44,7 @@ def get_logger() -> logging.Logger:
     handlingstream = logging.StreamHandler()
     handlingstream.setFormatter(RedactingFormatter(PII_FIELDS))
     returning.addHandler(handlingstream)
+    return returning
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
@@ -69,3 +70,25 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                                       password=db_pwd,
                                                       host=db_host,
                                                       database=db_name)
+
+
+def main() -> None:
+    """
+    Main Function for this module
+    """
+    connecting = get_db()
+    mycursor = connecting.cursor()
+    mycursor.execute('SELECT * from users')
+    for_formatting = mycursor.fetchall()
+    logger = get_logger()
+    for line in mycursor:
+        msg = ''
+        for col in mycursor.column_names:
+            msg += "{}={};".format(col, line)
+        logger.info(msg)
+    mycursor.close()
+    connecting.close()
+
+
+if __name__ == '__main__':
+    main()
