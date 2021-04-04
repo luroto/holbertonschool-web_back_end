@@ -26,8 +26,8 @@ class Auth():
                 break
         print("Este es el valor de checking {}".format(checking))
         if checking == -1:
-            return True
-        if checking != -1 or path in excluded_paths:
+            return False
+        if checking == 0 or checking != -1 or path in excluded_paths:
             return False
 
     def authorization_header(self, request=None) -> str:
