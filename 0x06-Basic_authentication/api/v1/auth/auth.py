@@ -19,14 +19,24 @@ class Auth():
             return True
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
-        checking = 0
+        ruti = ""
+        pathos = ""
         for rutas in excluded_paths:
             if rutas.find(path) == -1:
-                checking = -1
-                break
-        if checking == -1:
-            return False
-        if checking == 0 or checking != -1 or path in excluded_paths:
+                if path[-1] == '/':
+                    ruti = path[:-1]
+                else:
+                    ruti = path
+                if rutas[-1] == '/':
+                    pathos = rutas[:-1]
+                else:
+                    pathos = rutas
+                if len(pathos) == len(ruti):
+                    for i in range(len(ruti)):
+                        if pathos[i] != ruti[i]:
+                            return True
+                return False
+        if path in excluded_paths:
             return False
 
     def authorization_header(self, request=None) -> str:
