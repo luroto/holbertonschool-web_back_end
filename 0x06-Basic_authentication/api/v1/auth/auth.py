@@ -24,9 +24,11 @@ class Auth():
             if rutas.find(path) == -1:
                 checking = -1
                 break
+        print("Este es el valor de checking {}".format(checking))
         if checking == -1:
             return True
-        return False
+        if checking != -1 or path in excluded_paths:
+            return False
 
     def authorization_header(self, request=None) -> str:
         """
