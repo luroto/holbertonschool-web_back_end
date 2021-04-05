@@ -38,6 +38,3 @@ class Auth():
         Returns the current user
         """
         return None
-
-
-
