@@ -21,7 +21,6 @@ class Auth():
         if path[-1] == '/':
             path = path[:-1]
         for rutas in excluded_paths:
-            print("{} and {}".format(path, rutas))
             if path in rutas:
                 return False
         return True
@@ -41,8 +40,4 @@ class Auth():
         return None
 
 
-class BasicAuth(Auth):
-    '''
-    Basic Auth Classs
-    '''
-    pass
+
