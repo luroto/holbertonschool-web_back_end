@@ -4,7 +4,7 @@ Defining Auth Classes
 """
 from flask import request
 from typing import List, TypeVar
-from .auth import Auth
+from . import Auth
 
 class BasicAuth(Auth):
     """
