@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Defining Auth Classes
+Defining BasicAuth Classes
 """
 from flask import request
 from typing import List, TypeVar
@@ -8,6 +8,6 @@ from . import Auth
 
 class BasicAuth(Auth):
     """
-    Printing for now
+    Based on Auth we create the Basic Auth
     """
     pass
