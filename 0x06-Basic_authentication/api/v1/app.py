@@ -21,7 +21,7 @@ if getenv("AUTH_TYPE") == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
 
-if getenv("AUTH_TYPE") == "BasicAuth":
+if getenv("AUTH_TYPE") == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
@@ -32,7 +32,6 @@ def before_request():
     Custom before_request method
     """
     if auth is not None:
-        print(" este es el path {}".format(request.path))
         if auth.require_auth(request.path, authorized) is False:
             return
         if auth.authorization_header(request) is None:

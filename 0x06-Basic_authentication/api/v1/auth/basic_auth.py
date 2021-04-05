@@ -4,10 +4,10 @@ Defining BasicAuth Classes
 """
 from flask import request
 from typing import List, TypeVar
-from . import Auth
+from api.v1.auth.auth import Auth
+
 
 class BasicAuth(Auth):
     """
     Based on Auth we create the Basic Auth
     """
-    pass
