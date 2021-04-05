@@ -6,7 +6,7 @@ from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
-from api.v1.auth.auth import Auth
+
 import os
 
 
@@ -14,13 +14,31 @@ app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
-unauthorized = ['/api/v1/status/',
-                '/api/v1/unauthorized/', '/api/v1/forbidden/']
+authorized = ['/api/v1/status/',
+              '/api/v1/unauthorized/', '/api/v1/forbidden/']
 
-auth = getenv("AUTH_TYPE", None)
-
-if auth is not None:
+if getenv("AUTH_TYPE") == "auth":
+    from api.v1.auth.auth import Auth
     auth = Auth()
+
+if getenv("AUTH_TYPE") == "BasicAuth":
+    from api.v1.auth.BasicAuth import BasicAuth
+    auth = BasicAuth()
+
+
+@app.before_request
+def before_request():
+    """
+    Custom before_request method
+    """
+    if auth is not None:
+        print(" este es el path {}".format(request.path))
+        if auth.require_auth(request.path, authorized) is False:
+            return
+        if auth.authorization_header(request) is None:
+            return abort(401)
+        if auth.current_user(request) is None:
+            return abort(403)
 
 
 @app.errorhandler(404)
@@ -43,19 +61,6 @@ def forbidden(error) -> str:
     Forbidden access handler
     """
     return jsonify({"error": "Forbidden"}), 403
-
-
-@app.before_request
-def before_request():
-    """
-    Custom before_request method
-    """
-    if auth is not None:
-        if auth.require_auth(request.path, unauthorized) is False:
-            if auth.authorization_header(request) is None:
-                return abort(401, None)
-            if auth.current_user(request) is None:
-                return abort(403, None)
 
 
 if __name__ == "__main__":

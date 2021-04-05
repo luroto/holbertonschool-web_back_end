@@ -14,38 +14,23 @@ class Auth():
         """
         Public methor for require auth check
         """
-
         if path is None:
             return True
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
-        ruti = ""
-        pathos = ""
+        if path[-1] == '/':
+            path = path[:-1]
         for rutas in excluded_paths:
-            if rutas.find(path) == -1:
-                if path[-1] == '/':
-                    ruti = path[:-1]
-                else:
-                    ruti = path
-                if rutas[-1] == '/':
-                    pathos = rutas[:-1]
-                else:
-                    pathos = rutas
-                if len(pathos) == len(ruti):
-                    for i in range(len(ruti)):
-                        if pathos[i] != ruti[i]:
-                            return True
+            print("{} and {}".format(path, rutas))
+            if path in rutas:
                 return False
-        if path in excluded_paths:
-            return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """
         Authorization header first time
         """
-        if request is None:
-            return None
-        if request.headers.get("Authorization") is None:
+        if request is None or 'Authorization' not in request.headers:
             return None
         return request.headers.get("Authorization")
 
@@ -54,3 +39,10 @@ class Auth():
         Returns the current user
         """
         return None
+
+
+class BasicAuth(Auth):
+    '''
+    Basic Auth Classs
+    '''
+    pass
