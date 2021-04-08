@@ -6,6 +6,7 @@ from flask import request
 from typing import List, TypeVar
 from api.v1.auth.auth import Auth
 import base64
+from models.user import User
 
 
 class BasicAuth(Auth):
@@ -58,3 +59,23 @@ class BasicAuth(Auth):
             return (None, None)
         contents = decoded_base64_authorization_header.split(":")
         return (contents[0], contents[1])
+
+    def user_object_from_credentials(
+                                    self,
+                                    user_email: str,
+                                    user_pwd: str
+                                    ) -> TypeVar('User'):
+        """
+        Returns a User instance based on email & password
+        """
+        if user_email is None or isinstance(user_email, str) is not True:
+            return None
+        if user_pwd is None or isinstance(user_pwd, str) is not True:
+            return None
+        try:
+            busqueda = User.search({'email': user_email})
+            for usuario in busqueda:
+                if usuario.is_valid_password(user_pwd) is True:
+                    return usuario
+        except Exception:
+            return None
