@@ -13,7 +13,7 @@ class Auth():
     """
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        Public methor for require auth check
+        Public method for require auth check
         """
         if path is None:
             return True

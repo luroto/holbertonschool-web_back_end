@@ -6,7 +6,8 @@ from flask import abort, jsonify, request
 from models.user import User
 
 
-@app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
+@app_views.route('/auth_session/logout',
+                 methods=['POST'], strict_slashes=False)
 def all_routes() -> str:
     """ POST /api/v1/auth_session/login
     for handling session_auth routes
@@ -25,3 +26,12 @@ def all_routes() -> str:
         return jsonify({"error": "wrong password"}), 401
     from api.v1.app import auth
     return busqueda[0].to_json()
+
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
+def logout():
+    from api.v1.app import auth
+    if auth.destroy_session(request) is False:
+        abort(404)
+    return jsonify({}), 200
