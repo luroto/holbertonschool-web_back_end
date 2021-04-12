@@ -30,10 +30,10 @@ def all_routes() -> str:
 
 @app_views.route('/auth_session/logout',
                  methods=['DELETE'], strict_slashes=False)
-"""
-Route for removing sessions
-"""
 def logout():
+    """
+    Route for removing sessions
+    """
     from api.v1.app import auth
     if auth.destroy_session(request) is False:
         abort(404)
