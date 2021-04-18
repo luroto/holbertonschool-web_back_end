@@ -53,12 +53,12 @@ class DB:
         except (AttributeError, NoResultFound, InvalidRequestError) as e:
             raise e
 
-    def update_user(self, *args, **kwargs) -> None:
+    def update_user(self, user_id, **kwargs) -> None:
         """
         Method for updating User instance
         """
         try:
-            user = self.find_user_by(kwargs.get('id'))
+            user = self.find_user_by(kwargs.get(user_id))
             if user is not None:
                 for key, value in kwargs.items():
                     if key in user.__dict__ and key != 'id':
