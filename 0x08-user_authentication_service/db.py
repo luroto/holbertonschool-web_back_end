@@ -6,7 +6,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from typing import Type
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError
+from typing import Type, Dict
 
 from user import Base, User
 
@@ -32,12 +34,21 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> Type[User]:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """
         Method for adding new users
         """
-        session = self._session
         new_user = User(email=email, hashed_password=hashed_password)
-        session.add(new_user)
-        session.commit()
+        self._session.add(new_user)
+        self._session.commit()
         return new_user
+
+    def find_user_by(self, *args, **kwargs) -> User:
+        """
+        Method for finding the first user using the keyword arguments
+        """
+        try:
+            lista = self._session.query(User).filter_by(**kwargs).one()
+            return lista
+        except (AttributeError, NoResultFound, InvalidRequestError) as e:
+            raise e
