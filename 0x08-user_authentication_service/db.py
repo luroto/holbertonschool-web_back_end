@@ -59,5 +59,8 @@ class DB:
         """
         try:
             user = self.find_user_by(kwargs.get('id'))
+            for key, value in kwargs.items():
+                setattr(user, key, value)
+            self._session.commit()
         except ValueError as e:
             raise e
