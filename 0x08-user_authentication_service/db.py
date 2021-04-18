@@ -52,3 +52,12 @@ class DB:
             return lista
         except (AttributeError, NoResultFound, InvalidRequestError) as e:
             raise e
+
+    def update_user(self, *args, **kwargs) -> None:
+        """
+        Method for updating User instance
+        """
+        try:
+            user = self.find_user_by(kwargs.get('id'))
+        except ValueError as e:
+            raise e
