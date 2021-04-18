@@ -59,8 +59,9 @@ class DB:
         """
         try:
             user = self.find_user_by(kwargs.get('id'))
-            for key, value in kwargs.items():
-                setattr(user, key, value)
-            return None
-        except ValueError as e:
+            if user is not None:
+                for key, value in kwargs.items():
+                    if key in user.__dict__ and key != 'id':
+                        setattr(user, key, value)
+        except(ValueError, NoResultFound) as e:
             raise e
