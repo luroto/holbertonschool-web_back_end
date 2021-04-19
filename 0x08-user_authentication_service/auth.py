@@ -29,3 +29,14 @@ class Auth:
             raise ValueError("{} already exists".format(email))
         passi = _hash_password(password)
         return self._db.add_user(email, passi)
+
+    def valid_login(self, email: str, password: str) -> bool:
+        """
+        Checks if an existing email matches with provided password
+        """
+        user = self._db.find_user_by(email)
+        if user.email != email:
+            return False
+        if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+            return True
+        return False
