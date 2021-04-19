@@ -35,9 +35,10 @@ def users():
         allData[pair[0]] = pair[1]
     try:
         AUTH.register_user(allData['email'], allData['password'])
+        return jsonify({"email": allData['email'],
+                        "message": "user created"}), 200
     except ValueError:
         return jsonify({"message": "email already registered"}), 400
-    return jsonify({"email": allData['email'], "message": "user created"}), 400
 
 
 if __name__ == "__main__":
