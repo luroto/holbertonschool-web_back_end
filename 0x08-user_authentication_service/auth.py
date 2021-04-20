@@ -45,4 +45,4 @@ class Auth:
         """
         Returns a string rep of a UUID
         """
-        return str(uuid.UUID)
+        return str(uuid.uuid4())
