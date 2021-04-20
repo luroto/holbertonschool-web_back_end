@@ -41,8 +41,18 @@ class Auth:
                 return True
         return False
 
-    def _generate_uuid(self):
+    def _generate_uuid(self) -> str:
         """
         Returns a string rep of a UUID
         """
         return str(uuid.uuid4())
+
+    def create_session(self, email: str) -> str:
+        """
+        Takes an email string and returns the session ID
+        """
+        uuid = self._generate_uuid()
+        user = self._db.find_user_by({'email': email})
+        if user.email == email:
+            self._db.update_user(user.id, session_id=uuid)
+            return uuid
