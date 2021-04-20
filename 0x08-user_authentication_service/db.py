@@ -47,7 +47,10 @@ class DB:
         """
         Method for finding the first user using the keyword arguments
         """
-        return self._session.query(User).filter_by(**kwargs).one_or_none()
+        try: 
+            return self._session.query(User).filter_by(**kwargs).one_or_none()
+        except (AttributeError, NoResultFound, InvalidRequestError) as e:
+            raise e
 
     def update_user(self, user_id, **kwargs) -> None:
         """
@@ -59,5 +62,6 @@ class DB:
                 for key, value in kwargs.items():
                     if key in user.__dict__ and key != 'id':
                         setattr(user, key, value)
+                self._session.commit()
         except(ValueError, NoResultFound) as e:
             raise e
