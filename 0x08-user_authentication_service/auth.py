@@ -5,6 +5,7 @@ Auth functions
 import bcrypt
 from db import DB
 from user import User
+import uuid
 
 
 def _hash_password(password):
@@ -35,8 +36,13 @@ class Auth:
         Checks if an existing email matches with provided password
         """
         user = self._db.find_user_by(email)
-        if user.email != email:
-            return False
-        if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
-            return True
+        if user.email == email:
+            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+                return True
         return False
+
+    def _generate_uuid(self):
+        """
+        Returns a string rep of a UUID
+        """
+        return str(uuid.UUID)
