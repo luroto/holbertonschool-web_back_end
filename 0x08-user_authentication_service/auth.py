@@ -56,3 +56,20 @@ class Auth:
         if user.email == email:
             self._db.update_user(user.id, session_id=uuid)
             return uuid
+
+    def get_user_from_session_id(self, session_id: str):
+        """
+        Gets user from session id
+        """
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            return user
+        except Exception:
+            return None
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Method that destroys an user session
+        """
+        self._db.update_user(user_id, session_id=None)
+        return None

@@ -47,7 +47,7 @@ class DB:
         """
         Method for finding the first user using the keyword arguments
         """
-        try: 
+        try:
             return self._session.query(User).filter_by(**kwargs).one_or_none()
         except (AttributeError, NoResultFound, InvalidRequestError) as e:
             raise e
