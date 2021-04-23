@@ -2,8 +2,7 @@
 """
 Route module for the API
 """
-from flask import Flask, g, request, render_template
-from flask_cors import (CORS, cross_origin)
+from flask import Flask, request, render_template
 from flask_babel import Babel, gettext
 
 
@@ -24,7 +23,7 @@ def firstRoute():
     """
     First route to be implemented
     """
-    return render_template('0-index.html')
+    return render_template('3-index.html')
 
 
 @babel.localeselector
