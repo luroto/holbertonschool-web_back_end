@@ -2,7 +2,7 @@
 """
 Route module for the API
 """
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g
 from flask_babel import Babel, gettext
 
 
@@ -23,7 +23,7 @@ def firstRoute():
     """
     First route to be implemented
     """
-    return render_template('3-index.html')
+    return render_template('4-index.html')
 
 
 @babel.localeselector
@@ -31,6 +31,9 @@ def get_locale():
     """
     Function fot get locale from request
     """
+    user = getattr(g, 'user', None)
+    if user is not None and user.locale in app.config['LANGUAGES']:
+        return user.locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
