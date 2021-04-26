@@ -4,7 +4,7 @@ Route module for the API incluiding getlocale function based
 on query parameters
 """
 from flask import Flask, request, render_template, g
-from flask_babel import Babel, gettext
+from flask_babel import Babel
 
 
 class Config(object):
@@ -30,7 +30,7 @@ def firstRoute():
 @babel.localeselector
 def get_locale():
     """
-    Function fot get locale from request
+    Function fot get locale from request to check for parameters
     """
     user_locale = request.args.get('locale')
     if user_locale is not None and user_locale in app.config['LANGUAGES']:

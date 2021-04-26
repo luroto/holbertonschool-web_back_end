@@ -3,7 +3,7 @@
 Route module for the API and handling of translations
 """
 from flask import Flask, request, render_template, g
-from flask_babel import Babel, gettext
+from flask_babel import Babel
 
 
 users = {
@@ -25,10 +25,11 @@ def get_user():
     """
     Function for checking for user or login_as
     """
-    user_id = request.args.get('login_as')
-    if user_id:
+    try: 
+        user_id = request.args.get('login_as')
         return users.get(int(user_id))
-    return None
+    except Exception:
+        return None
 
 
 app = Flask(__name__)
@@ -57,9 +58,12 @@ def get_locale():
 
 @app.before_request
 def before_request():
+
     user = get_user()
-    if user:
-        g.user.name = user
+    if user is not None:
+        g.user = user
+        print(g.user)
+
 
 
 if __name__ == "__main__":

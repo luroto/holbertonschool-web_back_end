@@ -3,7 +3,7 @@
 Route module for the API, incluiding creation of dictionaries
 """
 from flask import Flask, request, render_template
-from flask_babel import Babel, gettext
+from flask_babel import Babel
 
 
 class Config(object):
