@@ -26,7 +26,8 @@ def get_user():
     Function for checking for user or login_as
     """
     user_id = request.args.get('login_as')
-    return users.get(int(user_id))
+    if user_id:
+        return users.get(int(user_id))
 
 
 app = Flask(__name__)
@@ -51,10 +52,10 @@ def get_locale():
     if user_locale is not None and user_locale in app.config['LANGUAGES']:
         return user_locale
     user_locale = get_user()
-    if user_locale is not None:
+    if user_locale is not None and user_locale in app.config['LANGUAGES']:
         return user_locale['locale']
     user_locale = request.headers.get('locale')
-    if user_locale is not None:
+    if user_locale is not None and user_locale in app.config['LANGUAGES']:
         return user_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 

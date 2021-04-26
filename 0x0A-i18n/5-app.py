@@ -26,7 +26,8 @@ def get_user():
     Function for checking for user or login_as
     """
     user_id = request.args.get('login_as')
-    return users.get(int(user_id))
+    if user_id:
+        return users.get(int(user_id))
 
 
 app = Flask(__name__)
