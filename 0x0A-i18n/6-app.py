@@ -39,7 +39,7 @@ def firstRoute():
     """
     First route to be implemented
     """
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 
 @babel.localeselector
@@ -49,6 +49,12 @@ def get_locale():
     """
     user_locale = request.args.get('locale')
     if user_locale is not None and user_locale in app.config['LANGUAGES']:
+        return user_locale
+    user_locale = get_user()
+    if user_locale is not None:
+        return user_locale['locale']
+    user_locale = request.headers.get('locale')
+    if user_locale is not None:
         return user_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
