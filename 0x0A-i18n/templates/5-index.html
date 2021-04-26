@@ -5,10 +5,10 @@
     </head>
     <body>
         <h1>{{_('home_header') }}</h1>
-        {% if g.user -%}
-        <p>{{_('login_message', username=g.user['name'])}} </p>
-        {% else -%}
-        <p>{{_('not_logged') }}</p>
+        {% if g.user %}
+            <p>{{ _('login_message', username=g.user['name']) }} </p>
+        {% else %}
+            <p>{{ _('not_logged') }}</p>
         {% endif %}
     </body>
 </html>
