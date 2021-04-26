@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Route module for the API
+Route module for the API, incluiding creation of dictionaries
 """
 from flask import Flask, request, render_template
 from flask_babel import Babel, gettext
@@ -29,7 +29,7 @@ def firstRoute():
 @babel.localeselector
 def get_locale():
     """
-    Function fot get locale from request
+    Function fot get locale from request to use dictionaries
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 

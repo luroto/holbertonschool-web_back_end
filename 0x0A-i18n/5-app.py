@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Route module for the API
+Route module for the API and handling of translations
 """
 from flask import Flask, request, render_template, g
 from flask_babel import Babel, gettext
@@ -21,6 +21,16 @@ class Config(object):
     LANGUAGES = ["en", "fr"]
 
 
+def get_user():
+    """
+    Function for checking for user or login_as
+    """
+    user_id = request.args.get('login_as')
+    if user_id:
+        return users.get(int(user_id))
+    return None
+
+
 app = Flask(__name__)
 app.config.from_object(Config)
 babel = Babel(app)
@@ -31,7 +41,7 @@ def firstRoute():
     """
     First route to be implemented
     """
-    return render_template('4-index.html')
+    return render_template('5-index.html')
 
 
 @babel.localeselector
@@ -43,6 +53,13 @@ def get_locale():
     if user_locale is not None and user_locale in app.config['LANGUAGES']:
         return user_locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@app.before_request
+def before_request():
+    user = get_user()
+    if user:
+        g.user.name = user
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Route module for the API
+Route module for the API incluiding getlocale function based
+on query parameters
 """
 from flask import Flask, request, render_template, g
 from flask_babel import Babel, gettext
