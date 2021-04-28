@@ -36,6 +36,22 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(method: Callable) -> Callable:
+    """
+    Function decorator for Cache class
+    """
+    redis = method.__self__._redis
+    name = method.__qualname__
+    print("{} was called {} times:".format(name,
+                                           redis.get(name).decode('utf-8')))
+    inputs = redis.lrange("{}:inputs".format(name), 0, -1)
+    outputs = redis.lrange("{}:outputs".format(name), 0, -1)
+    full = list(zip(inputs, outputs))
+    for inp, output in full:
+        print("{}(*{}) -> {}".format(name, inp.decode('utf-8'),
+                                     output.decode('utf-8')))
+
+
 class Cache():
     """
     Class for explorating cache possibilities with Redis
