@@ -1,0 +1,2 @@
+-- Seventh task
+--SQL script that creates a stored procedure ComputeAverageScoreForUser that computes and store the average score for a student.
